@@ -20,7 +20,7 @@ jobs:
     name: Build in Development
     runs-on: ubuntu-latest
     environment: Service1-dev
-    if: ${{ github.event.inputs.Services == 'Service1' || ( github.event_name == 'push' && contains(github.event.head_commit.modified, 'main/Service1/') ) }}
+    if: ${{ github.event.inputs.Services == 'Service1' || github.event_name == 'push' ) }}
 
     steps:
     - name: Checkout code
