@@ -1,0 +1,38 @@
+name: Hello World Workflow
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch as needed
+  workflow_dispatch:  # Allows manual triggering of the workflow
+
+jobs:
+  hello-world-prod:
+    name: Hello World in Production
+    runs-on: ubuntu-latest
+    environment: Service1-prod
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup environment variables for Production
+      run: echo "ENVIRONMENT=prod" >> $GITHUB_ENV
+
+    - name: Hello World Script
+      run: echo "Hello World from Service1-prod environment!"
+
+  hello-world-dev:
+    name: Hello World in Development
+    runs-on: ubuntu-latest
+    environment: Service1-dev
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup environment variables for Development
+      run: echo "ENVIRONMENT=dev" >> $GITHUB_ENV
+
+    - name: Hello World Script
+      run: echo "Hello World from Service1-dev environment!"
