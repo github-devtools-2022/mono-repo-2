@@ -35,7 +35,6 @@ jobs:
   build-and-test-prod:
     name: Build, Test, and Deploy in Production
     runs-on: ubuntu-latest
-    needs: build-and-test-dev
     environment: service1-prod
 
     steps:
