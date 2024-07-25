@@ -16,9 +16,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Setup environment variables for Production
-      run: echo "ENVIRONMENT=prod" >> $GITHUB_ENV
-
     - name: Hello World Script
       run: echo "Hello World from Service1-prod environment!"
 
@@ -30,9 +27,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-
-    - name: Setup environment variables for Development
-      run: echo "ENVIRONMENT=dev" >> $GITHUB_ENV
 
     - name: Hello World Script
       run: echo "Hello World from Service1-dev environment!"
