@@ -1,26 +1,14 @@
-name: Hello World Workflow
+name: CI/CD Workflow
 
 on:
   push:
     branches:
-      - main  # Adjust the branch as needed
-  workflow_dispatch:  # Allows manual triggering of the workflow
+      - main  
+  workflow_dispatch:  
 
 jobs:
-  hello-world-prod:
-    name: Hello World in Production
-    runs-on: ubuntu-latest
-    environment: Service1-prod
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Hello World Script
-      run: echo "Hello World from Service1-prod environment!"
-
-  hello-world-dev:
-    name: Hello World in Development
+  build-and-test-dev:
+    name: Build, Test, and Deploy in Development
     runs-on: ubuntu-latest
     environment: Service1-dev
 
@@ -28,5 +16,43 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Hello World Script
-      run: echo "Hello World from Service1-dev environment!"
+    - name: Service1 Development
+      run: echo "This for Service1 Development"
+
+    - name: Build
+      run: |
+        echo "Building the project in Development environment..."
+
+    - name: Test
+      run: |
+        echo "Running tests in Development environment..."
+
+    - name: Deploy
+      run: |
+        echo "Deploying to Development environment..."
+       
+
+  build-and-test-prod:
+    name: Build, Test, and Deploy in Production
+    runs-on: ubuntu-latest
+    needs: build-and-test-dev
+    environment: service1-prod
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Service2 Development
+      run: echo "This for Service2 Development"
+
+    - name: Build
+      run: |
+        echo "Building the project in Production environment..."
+
+    - name: Test
+      run: |
+        echo "Running tests in Production environment..."
+       
+    - name: Deploy
+      run: |
+        echo "Deploying to Production environment..."
