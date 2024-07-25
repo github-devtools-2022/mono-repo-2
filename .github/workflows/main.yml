@@ -20,7 +20,7 @@ jobs:
     name: Build in Development
     runs-on: ubuntu-latest
     environment: Service1-dev
-    if: ${{ github.event_name == 'push' && github.event.paths[0] == 'Service1/**' || github.event_name == 'workflow_dispatch' && github.event.inputs.Services == 'Service1' }}
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' && github.event.inputs.Services == 'Service1' }}
 
 
     steps:
@@ -64,7 +64,7 @@ jobs:
     name: Build in Production
     runs-on: ubuntu-latest
     environment: Service1-prod
-    if: ${{ github.event_name == 'push' && github.event.paths[0] == 'Service1/**' || github.event_name == 'workflow_dispatch' && github.event.inputs.Services == 'Service1' }}
+    if: ${{ github.event_name == 'push'|| github.event_name == 'workflow_dispatch' && github.event.inputs.Services == 'Service1' }}
 
     steps:
     - name: Checkout code
