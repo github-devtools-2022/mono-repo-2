@@ -3,7 +3,7 @@ name: CI/CD Workflow
 on:
   push:
     paths:
-      - 'main/Service1/**'
+      - 'Service1/**'
   workflow_dispatch:
     inputs:
       Services:
