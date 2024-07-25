@@ -3,12 +3,12 @@ name: CI/CD Workflow
 on:
   push:
     branches:
-      - main  
+      - main 
   workflow_dispatch:  
 
 jobs:
-  build-and-test-dev:
-    name: Build, Test, and Deploy in Development
+  build-dev:
+    name: Build in Development
     runs-on: ubuntu-latest
     environment: Service1-dev
 
@@ -16,42 +16,80 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Service1 Development
-      run: echo "This for Service1 Development"
-
     - name: Build
       run: |
         echo "Building the project in Development environment..."
 
-    - name: Test
-      run: |
-        echo "Running tests in Development environment..."
-
-    - name: Deploy
-      run: |
-        echo "Deploying to Development environment..."
-       
-
-  build-and-test-prod:
-    name: Build, Test, and Deploy in Production
+  test-dev:
+    name: Test in Development
     runs-on: ubuntu-latest
-    environment: service1-prod
+    needs: build-dev
+    environment: Service1-dev
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Service2 Development
-      run: echo "This for Service2 Development"
+    - name: Test
+      run: |
+        echo "Running tests in Development environment..."
+        
+  deploy-dev:
+    name: Deploy in Development
+    runs-on: ubuntu-latest
+    needs: test-dev
+    environment: Service1-dev
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy
+      run: |
+        echo "Deploying to Development environment..."
+        
+
+  build-prod:
+    name: Build in Production
+    runs-on: ubuntu-latest
+    needs: deploy-dev
+    environment: Service1-prod
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
     - name: Build
       run: |
         echo "Building the project in Production environment..."
+        
+
+  test-prod:
+    name: Test in Production
+    runs-on: ubuntu-latest
+    needs: build-prod
+    environment: Service1-prod
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
     - name: Test
       run: |
         echo "Running tests in Production environment..."
        
+
+  deploy-prod:
+    name: Deploy in Production
+    runs-on: ubuntu-latest
+    needs: test-prod
+    environment: Service1-prod
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
     - name: Deploy
       run: |
         echo "Deploying to Production environment..."
+        
